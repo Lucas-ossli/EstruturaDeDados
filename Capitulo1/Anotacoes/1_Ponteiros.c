@@ -29,6 +29,9 @@ void main(){
  
  printf("\n\nLocal da memoria do ponteiro (pverificacao): #%p", &pverificacao);
  printf("\nvalor do ponteiro (pverificacao) #%p\n\n", pverificacao);
+ 
+ printf("\n\n\n");
+ 
 	return 0;
 }
 
