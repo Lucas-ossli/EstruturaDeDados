@@ -30,5 +30,8 @@ int main(){
 	printf("\nsizeof Funcionario: %d", sizeof(func));
 	printf("\nNome: %s \t|Salario: %.2f",func.nome,func.salario);
 	
+	
+	
 	return 0;
 }
+
