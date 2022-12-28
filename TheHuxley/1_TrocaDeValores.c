@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//https://thehuxley.com/problem/2339
+
 
 void main(){
 	int a,b;
