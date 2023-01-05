@@ -4,8 +4,7 @@ Estudo de Estrutura de dados
 
 Livro Base: Estruturas de Dados Usando C (Tenenbaum)
 
-Sites de exercícios utilizados:https://www.thehuxley.com/ 
-                               https://www.hackerrank.com/
+Sites de exercícios utilizados: https://www.thehuxley.com/   |    https://www.hackerrank.com/
 
 Objetivo: Aprender conceitos bases importantes de programação.
 
