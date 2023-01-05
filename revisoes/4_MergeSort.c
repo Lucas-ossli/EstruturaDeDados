@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <locale.h>
+
 
 void selectionSort(int array[], int size, bool second);
 
@@ -8,6 +10,7 @@ void merge(int array[], int size );
 
 int main(){
 	
+	setlocale(LC_ALL, "Portuguese");
 	
 	int i,size;
 	
@@ -15,9 +18,9 @@ int main(){
 	scanf("%d", &size);
 	int array1[size];
 	
-	printf("\n\nArray 1st \n\n");
+	printf("\n\nVetor Inicial Não ordenado \n\n");
 	for(i=0 ; i < size ; i++){
-		array1[i] = rand()%10000 - 1000;
+		array1[i] = rand()%9874;
 		
 		printf("  %d", array1[i]);
 	}
@@ -25,35 +28,28 @@ int main(){
 	selectionSort(array1, size/2, false);
 	selectionSort(array1, size, true);
 	
-
-	printf("\n\nVetor 2nd \n\n");
+	
+	printf("\n\nVetor dividido ao meio e cada uma das partes ordenadas por sí só \n\n");
 	for(i=0 ; i < size ; i++){
 		
 		printf("  %d", array1[i]);
 	}
 	
-	//
-	
-	//
 	merge(array1, size);
 	
-	printf("\n\nVetor 2nd \n\n");
+	printf("\nVetor Ordenado \n\n");
 	for(i=0 ; i < size ; i++){
 		
 		printf("  %d", array1[i]);
 	}
-	
 	
 	printf("\n\n");
 	return 0;
 	
-	
-	
-	
 }
 
 void merge(int array[], int size ){
-	//TO DO - Refatorar
+	
 	int halfSize = size/2; 
 	int i,j,k;
 	j=0;
@@ -62,13 +58,13 @@ void merge(int array[], int size ){
 	int lowHalf[size/2];
 	int highHalf[size/2];
 	
+	printf("\n\n");
 	for (i = 0 ; i<halfSize ; i++){
-		
 		lowHalf[i] = array[i];
 		highHalf[i] = array[i+halfSize];
 	}
 	
-	
+
 	for(i=0 ; i < size ; i++){
 		
 		if(lowHalf[j] <= highHalf[k]){
@@ -76,14 +72,14 @@ void merge(int array[], int size ){
 			array[i] = lowHalf[j];
 			j++;
 			
-			if(j+1 == size/2){
-				i++;
-				while(j+1 < size){
-					i++;
-					array[i] = highHalf[j-1];
-					j++;
-				}
+			if(j == (size/2)-1){
 				
+				while(k < size/2){
+					i++;
+					array[i] = highHalf[k];
+					k++;
+				}
+				i++;
 			}
 			
 		}else{
@@ -91,19 +87,19 @@ void merge(int array[], int size ){
 			array[i] = highHalf[k];
 			k++;
 			
-			if(k+1 == size/2){
-				i++;
-				while(k+1 < size){
+			if(k == (size/2)-1){
+				
+				while(j < size/2){
 					i++;
-					array[i] = lowHalf[k-1];
-					k++;
+					array[i] = lowHalf[j];
+					j++;
 				}
+				i++;
 			}
 		}
 		
 		
 	}
-	
 	
 }
 
