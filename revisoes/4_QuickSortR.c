@@ -24,7 +24,7 @@ int main(){
 	
 	
 	
-	quickSort(array,0,size);
+	quickSort(array,0,size-1);
 	
 	
 	
@@ -43,6 +43,7 @@ int main(){
 void quickSort(int array[], int inicio, int fim){
 	
 	int pivo;
+	
 	
 	if(inicio < fim){
 		
@@ -81,6 +82,8 @@ int partition(int array[], int inicio, int fim){
 	aux = array[i];
 	array[i] = array[fim];
 	array[fim] = aux;
+	
+	
 	
 	return i;
 }
