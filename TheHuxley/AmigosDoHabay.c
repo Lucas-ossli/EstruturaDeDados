@@ -8,9 +8,11 @@
 //e em caso de empate, vence aquele que realizou primeiro a inscrição
 
 int maiorNome(char array[][50][100],int size);
-int partition(char array[][50][100], int inicio, int fim);
-void quickSort(char array[][50][100], int inicio, int fim);
+void selectionSort(char array[][50][100], int size);
 void converterParaArray(char array[][50][100], char *copia, int posicao);
+
+
+//TO DO FAZER O CHAR ALUNO COMO UMA STRUCT
 
 int main(){
 	
@@ -48,7 +50,7 @@ int main(){
 	amigoDoHabay= aluno[0][maiorNome(aluno,i)];
 	
 	
-	quickSort(aluno,0,i-1);
+	selectionSort(aluno,i);
 	
 	
 	for(j=0 ; j<i ; j++){
@@ -101,76 +103,37 @@ int maiorNome(char array[][50][100],int size){
 
 //////////////////////////////////////////
 
-void quickSort(char array[][50][100], int inicio, int fim){
+void selectionSort(char array[][50][100], int size){
 	
-	int pivo;
+	int  i_smaller, place, i,j;
+	char *smaller;
+	char *aux;
+	place = 0;
 	
-	
-	if(inicio < fim){
+	for(i=1 ; i < size ; i++){
 		
-		pivo = partition(array,inicio,fim);
-		quickSort(array, inicio , pivo-1);
-		quickSort(array, pivo+1, fim);
+		smaller =  array[0][place];
+		i_smaller = place;
 		
-	}
-	
-	return;
-	
-	
-}
-
-
-int partition(char array[][50][100], int inicio, int fim){
-	
-	
-	char *pivo = array[0][fim];
-	int i = inicio;
-	int j,aux;
-	char *letraAux;
-	char *letraAux2;
-	letraAux2 = (char *)malloc(100*sizeof(int));
-	
-	for(j= inicio ; j < fim ; j++){
-		
-		
-		if(array[0][j] <= *pivo){
-			
-			//TO DO - FUNÇÃO CONVERT TO ARRAY
-			letraAux = array[0][j];
-			//array[0][j] = array[0][i];
+		for(j=place+1 ; j <size ; j++){
 			
 			
-			
-			letraAux2 = array[0][i];
-			array[0][j] = *letraAux;
-			
-			
-			
-			
-			
-			array[0][i] = *letraAux ;
-			i++;
+			if(array[0][j] < smaller ){
+				
+				*smaller = array[0][j];
+				i_smaller = j;
+				
+			}
 			
 		}
+		   aux = array[0][place];
+		   *array[0][i_smaller] = *aux;
+		   *array[0][place] = *smaller; 	
 		
-		
+		place++;
 	}
-	
-	*letraAux = array[0][i];
-	array[0][i] = array[0][fim];
-	array[0][fim] = *letraAux;
-	
-	
-	
-	
-	
-	
-	
-	
-	return i;
+
 }
-
-
 
 //TO DO - fazer a copia completa de uma string para uma string simples
 void converterParaArray(char array[][50][100], char *copia, int posicao){
