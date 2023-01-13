@@ -24,12 +24,15 @@ int main(){
 		push(&pilha, 2*i);
 	}
 	
-	printf("\nTOPO DA PILHA -----------");
+	printf("\nTOPO DA PILHA -----------\n\n");
+	printf("\t   /       /");
+	printf("\n\t  /       /");
 	for(i=14 ; i > -1 ; i--){
 		
-		printf("\n[%d] : %d ", i, pop(&pilha));
+		printf("\n\t | : %.2d\t | -- [%.2d]", pop(&pilha),i);
 	}
-	printf("\nFUNDO DA PILHA -----------\n\n");
+	printf("\n\t |-------|");
+	printf("\n\n\nFUNDO DA PILHA -----------\n\n");
 	
 	return 0;
 	
