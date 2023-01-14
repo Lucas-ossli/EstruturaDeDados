@@ -2,15 +2,15 @@
 #define MAXQUEUE 100
 //Fila Circular
 
-//---------------------Estrutura Fila-----------------------//
+//---------------------Estrutura Fila(Circular)-----------------------//
 struct queue{
 	int items[MAXQUEUE];
 	int front,rear;
 };
 
 empty (struct queue *ps);
-
 remove(struct queue *ps);
+insert(struct queue *ps, int x);
 
 //---------------------FIM Estrutura Fila-----------------------//
 
@@ -24,8 +24,8 @@ int main(){
 	return 0;
 }
 
-//TO DO PAG 214 - PDF:234
-//---------------------Estrutura Fila-----------------------//
+
+//---------------------Estrutura Fila(Circular)-----------------------//
 empty (struct queue *ps){
 	return((ps->front == ps->rear));
 }
@@ -46,3 +46,38 @@ remove(struct queue *ps){
 	return (ps->items[pq->front]);
 	
 }
+
+insert(struct queue *ps, int x){
+	
+	if(ps->rear == MAXQUEUE-1){
+		pq->rear = 0;
+	}
+	else{
+		(pq->rear)++;
+	}
+	//Verifica ocorrência de estouro
+	if(pq->rear == pq->front){
+		printf("Overflow"){
+			exit(1);
+		}
+	}
+	pq->items[pq->rear] = x ;
+	return;
+}
+       
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
