@@ -12,64 +12,68 @@ struct pessoa{
 
 
 int maiorNome(struct pessoa *aluno ,int size);
+
 void selectionSort(struct pessoa *aluno, int size);
 
 
 int main(){
 	
-	struct pessoa aluno[100];
-	//struct pessoa smaller[100];
-	struct pessoa amigoDoHabay;
-	//char aluno[2][50][100];
-	char fim[3] = {'F','I','M'};
-	
+	struct pessoa *aluno;
+	aluno = (struct pessoa *)malloc(100*sizeof(struct pessoa));
+	char *fim = "FIM";
+	char palavra[50];
 	int i,j,x;
 	x=0;
+	char * token;
 	
-	for(i=0 ; i<100 ; i++){
+	
+	for(i=0 ; i<100 && x != 1 ; i++){
 		
-			scanf("%s", &aluno[i].nome);
-			for(j=0 ; j<3 ; j++){
-				
-				if(fim[j] == aluno[i].nome[j]){
-					x++;
-				}
-				else{
-					x=0;
-				}
-				
-			}
-			if(x == 3){
-				
-				break;
-			}
-			else{
-				scanf("%s", &aluno[i].confirmacao);	
-				
-			}
+      gets(palavra);
+      token = strtok(palavra," ");
+      
+      if( strcmp( token, fim ) == 0 ){
+		  x=1;
+	  }
+	  else{
+		  strcpy( aluno[i].nome, token);
+      	  token = strtok(NULL, " ");
+      	  strcpy( aluno[i].confirmacao, token);
+	  }
+   }
 	
-	}
 	
 	
 	struct pessoa amigoHabay ;
-	amigoHabay = aluno[maiorNome(&aluno,i)];
+	amigoHabay = aluno[maiorNome(aluno,i)];
 	
-	selectionSort(&aluno,i);
+	selectionSort(aluno,i);
+	
 	
 	for(j=0 ; j<i ; j++){
 		
-		//if(aluno[j].confirmacao[0] == 'Y'){
-			printf("\nnome:%s ", aluno[j].nome);
-		//}
+		if(aluno[j].confirmacao[0] == 'Y'){
+			if(strcmp(aluno[j].nome, aluno[j+1].nome) == 0  /*aluno[j].nome == aluno[j+1].nome*/){
+				
+				continue;
+			}else{
+				printf("\n%s", aluno[j].nome);
+			}
+		}
 	}
 	
-	printf("\nAmigo do Habay:\n%s", amigoHabay.nome);
+	for(j=0 ; j<i ; j++){
+		
+		if(aluno[j].confirmacao[0] == 'N'){
+			printf("\n%s", aluno[j].nome);
+		}
+		
+	}
+	
+	printf("\n\nAmigo do Habay:\n%s", amigoHabay.nome);
 	
 	return 0;
 }
-
-
-
 
 int maiorNome(struct pessoa *aluno ,int size){
 	
@@ -94,57 +98,33 @@ int maiorNome(struct pessoa *aluno ,int size){
 				posicao = i;
 				aux=letras;
 			}
-			
 		}
-			
-		
 	}
-	
 	return posicao;
-	
 }
 
-//TO DO - TENHO QUE FAZER UM OUTRO VETOR ORDENADO
 void selectionSort(struct pessoa *aluno, int size){
 	
 	int  i_smaller, place,i,j;
-	struct pessoa smaller;
+	struct pessoa *smaller;
+	smaller = (struct pessoa*)malloc(sizeof(struct pessoa));
+	
 	place = 0;
 	
 	for(i=1 ; i < size ; i++){
 		
-		memcpy(&smaller, &aluno[place], sizeof(struct pessoa));
-		/
+		(*smaller) =  aluno[place];
 		i_smaller = place;
 		
-		for(j=place+1 ; j <size ; j++){
-			
-			
-			if(aluno[j].nome < smaller.nome){
-				
-				memcpy(&smaller, &aluno[j], sizeof(struct pessoa));
+		for(j=place+1 ; j <size ; j++ ){
+			if( strcmp(aluno[j].nome, smaller[0].nome) == -1 || strcmp(aluno[j].nome, smaller[0].nome) == 0){
+				*smaller = aluno[j];
 				i_smaller = j;
-				
 			}
-			
 		}
+	    aluno[i_smaller] = aluno[place];
+		aluno[place]= *smaller;
 		
-		memcpy(&aluno[i_smaller], &aluno[place], sizeof(struct pessoa));
-			
-	    //aluno[i_smaller].nome = aluno[place].nome;
-	    //aluno[i_smaller].confirmacao = aluno[place].confirmacao;
-	   
-		memcpy(&aluno[place], &smaller, sizeof(struct pessoa));
-		// aluno[place].nome = nome;
-		// aluno[place].confirmacao = confirmacao;
-	   
-		   
 		place++;
 	}
-
 }
-
-
-
-
-
