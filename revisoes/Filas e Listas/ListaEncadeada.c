@@ -19,6 +19,8 @@ void inserirInicio(struct list *lista, int valor);
 
 void inserirFinal(struct list *lista, int valor);
 
+void inserirOrdenado(struct list *lista, int valor);
+
 void removerItem(struct list *lista, int posicao);
 
 
@@ -94,7 +96,23 @@ int main(){
 	return 0;
 }
 
-
+void inserirOrdenado(struct list *lista, int valor){
+	
+	//primeiro cria o item que sera inserido
+	struct node *novo = (struct node*)malloc(sizeof(struct node));
+	novo->info = valor;
+	
+	//crie um aux para percorrer a lista;
+	struct node *aux = lista->inicio;
+	
+	
+	//percorra a lista até achar a posicao;
+	while(aux){
+		
+		aux = aux->proximo;
+	}
+	
+}
 
 void inserirInicio(struct list *lista, int valor){
 	struct node *novo = (struct node*)malloc(sizeof(struct node));

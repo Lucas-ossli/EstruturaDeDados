@@ -2,7 +2,7 @@
 
 Estudo de Estrutura de dados 
 
-Livro Base: Estruturas de Dados Usando C (Tenenbaum)
+Livros Base: Estruturas de Dados Usando C (Tenenbaum)  ||  C-Completo-Total (Hebert schildt)
 
 Sites de exercícios utilizados: https://www.thehuxley.com/   |    https://leetcode.com/
 
