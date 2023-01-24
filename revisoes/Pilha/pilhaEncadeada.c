@@ -2,14 +2,14 @@
 
 
 struct stack{
-    int *next;
+    struct stack *next;
     int info;
 
 }
 
 empty(struct stack pilha);
-push(struct stack pilha, int x);
-pop(struct stack pilha);
+push(struct stack *pilha, int x);
+pop(struct stack *pilha);
 info(struct stack pilha);
 next(struct stack pilha);
 
@@ -23,31 +23,29 @@ int main(){
     return 0;
 }
 
-push(struct stack pilha, int x){
+push(struct stack *pilha, int x){
 
-    int *p = getnode();
-    info(p) = x;
-    next(p) = pilha;
+    struct stack *p = (struct stack*)malloc(sizeof(struct stack));
+    p->info = x;
+    p->next = pilha;
     pilha = p;
 }
 
-empty(struct stack pilha){
-    return (next(pilha) == NULL )
-}
 
-pop(struct stack pilha){
+
+pop(struct stack *pilha){
 
     int x;
-    int *p = getnode(); 
-    if(empty()){
+    struct stack *p = (struct stack*)malloc(sizeof(struct stack));
+    if(pilha->next == NULL){
         printf("UnderFlow na pilha");
         exit(1);
     }else{
         p = pilha;
-        pilha = next(p);
+        pilha = p->next;
 
-        x = info(p);
-        freenode(p);
+        x = p->info;
+        free(p);
         return x;
     }
 }
@@ -58,18 +56,5 @@ info(struct stack pilha){
 
 next(struct stack pilha){
     return pilha.next;
-}
-
-//TO DO  -- sera ensinado na Seção 9.1 
-
-
-getnode(){
-
-
-}
-
-freenode(){
-
-
 }
 
