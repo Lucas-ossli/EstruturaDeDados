@@ -16,7 +16,7 @@ typedef struct {
 void inserirEsquerda(Node *node, int valor);
 void inserirDireita(Node *node, int valor);
 void inserir(ArvoreB *arv, int valor);
-
+int tamanhoDaArvore(Node *raiz);
 
 int main(){
 	
@@ -25,6 +25,8 @@ int main(){
 	
 	ArvoreB arvore;
 	arvore.raiz = NULL;
+	
+	
 	
 	//inserir(&arvore,50);
 	//inserir(&arvore,60);
@@ -41,6 +43,7 @@ int main(){
 		printf("\t _______________________________");
 		printf("\n\t|1 - Inserir conteudo na Árvore\t|");
 		printf("\n\t|2 - Imprimir Árvore           \t|");
+		printf("\n\t|3 - Tamanho da Árvore         \t|");
 		printf("\n\t|9 - Limpar a tela             \t|");
 		printf("\n\t|                              \t|\n\t ");
 		scanf("%d",&escolha);
@@ -55,7 +58,10 @@ int main(){
 		case 2:
 			printf("\n\t|");
 			imprimir(arvore.raiz);
-			
+			break;
+		case 3:
+			printf("\n\t|");
+			printf("Tamanho Da Árvore: %d ",tamanhoDaArvore(arvore.raiz));
 			break;
 		case 9:
 			system("cls");
@@ -167,4 +173,14 @@ void inserir(ArvoreB *arv, int valor){
 		
 	printf("\n\t|Não é possivel inserir valores repetidos dentro de uma Árvore ");
 
+}
+
+int tamanhoDaArvore(Node *raiz){
+	
+	if(raiz == NULL){
+		return 0;
+	}else{
+		return 1 + tamanhoDaArvore(raiz->esquerda) + tamanhoDaArvore(raiz->direita);
+	}
+	
 }
