@@ -18,14 +18,13 @@ void imprimir(Node *raiz);
 int tamanhoDaArvore(Node *raiz);
 int buscar(Node *raiz, int chave);
 Node* buscarReturnNode(Node *raiz, int chave);
+Node* remover(Node *raiz,int chave);
 
 int main(){
 	
 	setlocale(LC_ALL,"Portuguese");
 	int escolha,valor;
-	
 	Node *raizDaArvore = NULL;
-	
 	
 	
 	do{
@@ -36,6 +35,7 @@ int main(){
 		printf("\n\t|3 - Tamanho da Árvore         \t|");
 		printf("\n\t|4 - Buscar Elemento           \t|");
 		printf("\n\t|5 - Buscar Elemento e atribuir\t|");
+		printf("\n\t|6 - Remover Elemento          \t|");
 		printf("\n\t|9 - Limpar a tela             \t|");
 		printf("\n\t|                              \t|\n\t ");
 		scanf("%d",&escolha);
@@ -82,6 +82,20 @@ int main(){
 		    printf("\n\t|Valor %d Encontrado dentro da Árvore e atribuido na variável aux ", aux->info);    
 			 
 			break;
+		case 6:
+			
+			printf("\n\t|Árvore antes da remoção");
+			printf("\n\t|");
+			imprimir(raizDaArvore);
+			printf("\n\t|Escolha o valor que deseja remover: ");
+			scanf("%d",&valor);
+			raizDaArvore = remover(raizDaArvore, valor);
+			
+			printf("\n\t|Árvore após a remoção");
+			printf("\n\t|");
+			imprimir(raizDaArvore);
+			
+			break;
 		case 9:
 			system("cls");
 			break;
@@ -100,10 +114,10 @@ void imprimir(Node *raiz){
 	if(raiz != NULL){
 		
 		//Ordem crescente
-		
 		imprimir(raiz->esquerda);
 		printf("%d ", raiz->info);
 		imprimir(raiz->direita);
+				
 				
 		//Ordem Drescente
 		/*
@@ -157,11 +171,8 @@ Node* buscarReturnNode(Node *raiz, int chave){
 			else{
 				return buscarReturnNode(raiz->direita, chave);
 			}
-			
 		}
-		
 	}
-	
 }
 
 Node* inserir(Node *raiz, int valor){
@@ -201,3 +212,55 @@ int tamanhoDaArvore(Node *raiz){
 	
 }
 
+Node* remover(Node *raiz,int chave){
+	
+	if(raiz == NULL){
+		printf("\n\t|Valor não encontrado\n");
+		return NULL;
+		
+	}
+	else{
+		if(raiz->info == chave){
+			//Node Folha
+			if(raiz->esquerda == NULL && raiz->direita == NULL){
+				free(raiz);
+				return NULL;
+			}else {
+				//node com apenas 1 filho
+				if(raiz->esquerda == NULL || raiz->direita == NULL){
+					Node *aux;
+					if(raiz->esquerda != NULL){
+						aux = raiz->esquerda;
+					}else{
+						aux = raiz->direita;
+					}
+					free(raiz);
+					return aux;
+				}else{//Sub Árvore
+					Node *aux = raiz->esquerda;
+					
+					while(aux->direita != NULL){
+						aux = aux->direita;
+					}
+					
+					raiz->info = aux->info;
+					aux->info = chave;
+					raiz->esquerda = remover(raiz->esquerda, chave);
+					
+					return raiz;
+						
+				}
+			}
+		}
+		else{
+			if(chave < raiz->info){
+				raiz->esquerda = remover(raiz->esquerda,chave);
+			}
+			else{
+				raiz->direita = remover(raiz->direita,chave);
+			}
+			
+			return raiz;
+		}
+	}
+}
