@@ -33,9 +33,9 @@ int main(){
 	
 	while(escolhaDeArquivo > 3){
 		printf("\n|Em quantas casas decimais você deseja procurar?");
-		printf("\n|1 -| 1   Milhão de casas decimais");
-		printf("\n|2 -| 125 Milhão de casas decimais");
-		printf("\n|3 -| 1   Bilhão de casas decimais");
+		printf("\n|1 -| 1    Milhão de casas decimais");
+		printf("\n|2 -| 1,25 Milhão de casas decimais");
+		printf("\n|3 -| 1    Bilhão de casas decimais");
 		printf("\n|Digite sua opção: ");
 		scanf("%d",&escolhaDeArquivo);
 		system("cls");
@@ -48,7 +48,7 @@ int main(){
 			break;
 		case 2:
 			filename = "Pi125MDP.txt";
-			ocorrencia = 125000000-palindromeSize;
+			ocorrencia = 1250000-palindromeSize;
 			break;
 		case 3:
 			filename = "Pi1BDP.txt";
@@ -123,16 +123,16 @@ int main(){
 		insert(&decimalpi, auxUnidade[0] - '0');
 		ocorrencia--;
 		
-		if(ocorrencia%10000000 == 0){
-			printf("\n|Ocorrência: %d Procurando... ",j);
+		if(j%50000000 == 0){
+			printf("\n|Posição: %d Procurando... ",j);
 		}
 	}
 
 
 	//Imprimir tempo de execucao--------------------------------
 	time = clock() - time;
-	double time_taken = ((double)time)/CLOCKS_PER_SEC;
-	printf("\n\nseconds%f", time_taken);
+	//double time_taken = ((double)time)/CLOCKS_PER_SEC;
+	printf("\n\nSegundos: %.0f", (((double)time)/CLOCKS_PER_SEC) );
 	//-------------------------------------------------
 	
 	fclose(fp);
