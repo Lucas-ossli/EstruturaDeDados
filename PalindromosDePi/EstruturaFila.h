@@ -14,29 +14,13 @@ void insert(struct queue *ps, int x);
 
 //---------------------FIM Estrutura Fila-----------------------//
 
-int main(){
-	
-	
-	struct queue fila;
-	fila.front = MAXQUEUE-1;
-	fila.rear = MAXQUEUE-1;
-	
-	insert(&fila, 10 );
-	insert(&fila, 20 );
-	insert(&fila, 30 );
 
-	
-	
-	
-	int x = remover(&fila);
-	printf("%d", x);
-	while(!empty(&fila)){
-		
-		printf("\n%d",remover(&fila));
-	}
 
-	return 0;
-}
+//--- HOW TO START THE QUEUE	
+//	struct queue fila;
+//	fila.front = MAXQUEUE-1;
+//	fila.rear = MAXQUEUE-1;
+//--- HOW TO START THE QUEUE	
 
 
 //---------------------Estrutura Fila(Circular)-----------------------//

@@ -2,118 +2,155 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <locale.h>
+#include "EstruturaFila.h"
 
-int isPalidrome(int decimalpi, int sizeOfDecimal);
-void rearrange(int *array, int size);
-int isPrime(long num);
-int convertToInt(int array[], int size);
-int convertToArray(int array[],int number, int size);
+
+int isPrime(long long int num);
+long long int convertToInt(struct queue decimaispi, int size);
+int isPalidrome(struct queue decimaispi, int sizeOfDecimal);
+void imprimirSemRemover(struct queue decimaispi, int sizeOfDecimal);
 
 int main(){
 	
-	int palindromeSize,tamanho,i,j,index,decimalPi;
-	char *filename = "Pi1MDP.txt" ;
-	char *charNumber;
-	int MAX_LENGTH;
-	index=1;
+	setlocale(LC_ALL,"Portuguese");
 	
-	printf("\nInput Palindrome size ");
-	scanf("%d",&palindromeSize);
-	while(palindromeSize > 9){
-		printf("\n\nMax Palindrome size: 9,  Try again");
-		scanf("%d",&palindromeSize);
+	int palindromeSize=19,escolhaDeArquivo=4;
+	int i,j;
+	char *filename;
+	int ocorrencia,testes;
+	
+	while(palindromeSize > 17)
+	{	
+		printf("\n|Número limite de casas decimais: 17");
+		printf("\n|Digite o tamanho do palindromo que deseja procurar:  ");
+		scanf("%d",&palindromeSize);//MAX 17 -- MAX (LONG LONG INT ) == 17
 	}
-	MAX_LENGTH = palindromeSize+1; 
-	int number[MAX_LENGTH-1];
-	int numero; //APAGAR
-	char buffer[MAX_LENGTH];
-	//quantidade de caractere n-1;
+	
+	printf("\n|Digite a quantidade de ocorrências que deseja procurar ");
+	printf("\n|Caso queira procurar todas as ocorrências digite 0:  ");
+	scanf("%d",&testes);
+	
+	while(escolhaDeArquivo > 3){
+		printf("\n|Em quantas casas decimais você deseja procurar?");
+		printf("\n|1 -| 1   Milhão de casas decimais");
+		printf("\n|2 -| 125 Milhão de casas decimais");
+		printf("\n|3 -| 1   Bilhão de casas decimais");
+		printf("\n|Digite sua opção: ");
+		scanf("%d",&escolhaDeArquivo);
+		system("cls");
+	}
+			
+	switch(escolhaDeArquivo){
+		case 1:
+			filename = "Pi1MDP.txt";
+			ocorrencia = 1000000-palindromeSize;
+			break;
+		case 2:
+			filename = "Pi125MDP.txt";
+			ocorrencia = 125000000-palindromeSize;
+			break;
+		case 3:
+			filename = "Pi1BDP.txt";
+			ocorrencia = 1000000000-palindromeSize;
+			break;
+		default:
+			break;
+	}
+	
+	if(testes==0){
+		testes = ocorrencia;
+	}
+	
+	system("cls");
+	
+	//Registrar o tempo da execucao
+	clock_t time;
+	time = clock();
+	//--------------------------------//
+
+	
+	//Abrir o Arquivo txt-------------//
 	FILE *fp = fopen(filename, "r");
 	
 	if(fp == NULL){
-		printf("ERROR");
-		return 1;
+		printf("ERROR %s",*filename);
+		return 0;
+	}
+	//---------------------------------//
+	
+	
+	//cria a fila
+	struct queue decimalpi;
+	decimalpi.front = MAXQUEUE-1;
+	decimalpi.rear = MAXQUEUE-1;
+	//----------------
+	
+	
+	
+	char auxUnidade[1];
+	for(i=0 ;  i < palindromeSize ; i++){
+		fgets(auxUnidade, 2, fp);
+		insert(&decimalpi, auxUnidade[0] - '0');
 	}
 	
-	tamanho = 1000000%(MAX_LENGTH-1);
-	tamanho = tamanho + (1000000/(MAX_LENGTH-1));
-	
-	clock_t time;
-	time = clock();
-	
-	fgets(buffer, MAX_LENGTH, fp);
-	charNumber = buffer;
-	
-	numero = atoi(charNumber);
-	
-	convertToArray(number ,numero, MAX_LENGTH-1);
+	//Necessário remover a primeira ocorrencia 
+	remover(&decimalpi);
+	fgets(auxUnidade, 2, fp);
+	insert(&decimalpi, auxUnidade[0] - '0');
+	//----------------------------------------
 	
 	
-	printf("\n\n%d ", number[1]);
 	
-	//To Do Converter o numero para array;
-	if(isPalidrome(number, MAX_LENGTH-1)){
-		if(isPrime(number)){
-			printf("\n\nFirst ocorrency of a Palindrome and Prime:%d Index:%d",number, index );
-			return 0;
+	j=palindromeSize,i=1;
+	printf("\n|Procurando...");
+	while(ocorrencia && testes ){
+		
+		j++;
+		if(isPalidrome(decimalpi, palindromeSize)){
+			
+			if(isPrime(convertToInt(decimalpi,palindromeSize))){
+				
+				printf(" \n|Posição:%d \t\t |palindromo Primo: |",j);
+			    imprimirSemRemover(decimalpi, palindromeSize);
+			    printf("  |Ocorrência: %d", i);
+			    i++;
+			    testes--;
+			}
+		}
+		remover(&decimalpi);
+		fgets(auxUnidade, 2, fp);
+		insert(&decimalpi, auxUnidade[0] - '0');
+		ocorrencia--;
+		
+		if(ocorrencia%10000000 == 0){
+			printf("\n|Ocorrência: %d Procurando... ",j);
 		}
 	}
-	
-	
-	for(i=1 ; i< tamanho ; i++){
-		
-			
-			for(j=0 ; j< MAX_LENGTH-1 ; j++ ){
-				
-				rearrange( &number, MAX_LENGTH-1);
-				number[MAX_LENGTH-2] = atoi(buffer[j]);
-				
-				
-				//TO DO Convert the array to an integer;
-				decimalPi = convertToInt(number, MAX_LENGTH-1);
-			//	if(isPalidrome(number, MAX_LENGTH-1))
-			//	{
-					if(isPrime(decimalPi))
-					{
-						printf("\n\nFirst ocorrency of a Palindrome and Prime:%d Index:%d",number, index );
-						return 0;
-					}
-	  	  	   // }
-			}	
-			
-			fgets(buffer, MAX_LENGTH, fp);
-			printf("Numero:%s | Ocorrencia:%d\n\n" , buffer,i);
-			
-	}
-	
-	
-	
-	//time take
+
+
+	//Imprimir tempo de execucao--------------------------------
 	time = clock() - time;
 	double time_taken = ((double)time)/CLOCKS_PER_SEC;
-	//time
+	printf("\n\nseconds%f", time_taken);
+	//-------------------------------------------------
 	
 	fclose(fp);
-	
-	printf("\n\nseconds%f", time_taken);
 	printf("\n\n%s", filename);
-	
-	
-	
-	
 	
 	return 0;
 }
 
 
-int convertToInt(int array[], int size){
+long long int convertToInt(struct queue decimaispi, int size){
 	
-	int number,i;
+	long long int number;
+	int i;
 	number = 0;
 	
 	for (i = 0; i < size; i++) {
 	    number *= 10;
-	    number += array[i];
+	    number += remover(&decimaispi);
 	}
 	
 	return number;
@@ -121,7 +158,7 @@ int convertToInt(int array[], int size){
 }
 
 
-int isPrime(long num)
+int isPrime(long long int num)
 {
     int k = 1, a = 0, b = 0;
     long sr;
@@ -155,30 +192,30 @@ int isPrime(long num)
     return 1;
 }
 
-int isPalidrome(int decimalpi, int sizeOfDecimal){
-	int i;
-	for(i = decimalpi ; i>0 ; i--);
-//	char *copiaReversa = string[palindromo].
-	return 0;
-}
-
-void rearrange(int *array, int size){
-	int i;
-	for (i=1 ; i< size ; i++){
-		array[i-1]  = array[i];
+void imprimirSemRemover(struct queue decimaispi, int sizeOfDecimal){
+	int  i;
+	for(i=0 ; i < sizeOfDecimal ; i++){
+		printf("%d",remover(&decimaispi));
 	}
 }
-
-int convertToArray(int array[], int number, int size){
-	
-	int digits[size];
+					      //decimaispi é uma copia da fila, pode alterar sem nenhum problema;
+int isPalidrome(struct queue decimaispi, int sizeOfDecimal){
 	int i;
-	for ( i = size; i >= 0; i--)
-	{
-	    digits[i] = number % 10;
-	    number = number / 10;
+	int copia[sizeOfDecimal];
+	
+	for(i=0 ; i < sizeOfDecimal ; i++){
+		copia[i] = remover(&decimaispi);
+	}
+	 
+
+    for(i=0 ; i < sizeOfDecimal/2 ; i++){
+		
+		if(copia[i] != copia[sizeOfDecimal-1 - i] ){
+			return 0;
+		}
+
 	}
 	
-	*array =  digits;
-	
+	return 1;
 }
+

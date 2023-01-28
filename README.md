@@ -17,3 +17,6 @@ Um desafio que achei interessante de se fazer por conta de ser extenso e abrange
 ## Oque o programa faz? 
 
   Ele retorna a primeira ocorrência de um palíndromo de determinado tamanho(n) que também seja um numero PRIMO, dentro das casas decimais de PI.
+
+### Fonte dos arquivos
+  arquivo txt de decimais de PI: https://github.com/eneko/Pi  || https://stuff.mit.edu/afs/sipb/contrib/pi/
